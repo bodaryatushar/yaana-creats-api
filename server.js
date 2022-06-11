@@ -8,7 +8,7 @@ const server = new ApolloServer({
   introspection: true,
   playground: true,
   cors: {
-    origin: ["https://www.yaanacreats.com", "https://yaana-creates-froentend.vercel.app", "http://localhost:3001","*"],
+    origin: "https://www.yaanacreats.com",
     credentials: true
   }
 })
