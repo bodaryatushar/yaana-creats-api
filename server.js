@@ -7,22 +7,12 @@ const server = new ApolloServer({
   resolvers,
   introspection: true,
   playground: true,
+  csrfPrevention:false,
   cors: {
     origin: ["https://www.yaanacreats.com","https://yaana-creates-froentend.vercel.app"],
     credentials: true
   }
 })
-
-const corsOptions = {
-  origin: ["https://www.yaanacreats.com","https://yaana-creates-froentend.vercel.app"],
-  credentials: true
-};
-
-server.applyMiddleware({
-  app,
-  cors: corsOptions,
-  path: "/graphql",
-});
 
 server
   .listen({ port: process.env.PORT || 4000 })
