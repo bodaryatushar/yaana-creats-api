@@ -1,24 +1,19 @@
-const express = require("express");
-const cors = require("cors");
-const { ApolloServer } = require("apollo-server-express");
+const { ApolloServer } = require('apollo-server')
+const typeDefs = require('./src/product/schema')
+const resolvers = require('./src/product/resolver')
 
-const typeDefs = require("./src/product/schema");
-const resolvers = require("./src/product/resolver");
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  introspection: true,
+  playground: true,
+  csrfPrevention:false,
+  cors: {
+    origin: ["https://www.yaanacreats.com","https://yaana-creates-froentend.vercel.app"],
+    credentials: true
+  }
+})
 
-async function startApolloServer() {
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-  });
-  await server.start();
-
-  const app = express();
-
-  app.use(cors());
-
-  await new Promise((resolve) => app.listen({ port: 4000 }, resolve));
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
-  return { server, app };
-}
-
-startApolloServer();
+server
+  .listen({ port: process.env.PORT || 4000 })
+  .then(({ url }) => console.log('Server is running on localhost:4000', url))
