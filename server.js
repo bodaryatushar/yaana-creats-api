@@ -13,6 +13,17 @@ const server = new ApolloServer({
   }
 })
 
+const corsOptions = {
+  origin: ["https://www.yaanacreats.com","https://yaana-creates-froentend.vercel.app"],
+  credentials: true
+};
+
+server.applyMiddleware({
+  app,
+  cors: corsOptions,
+  path: "/graphql",
+});
+
 server
   .listen({ port: process.env.PORT || 4000 })
   .then(({ url }) => console.log('Server is running on localhost:4000', url))
